@@ -9,7 +9,10 @@ let cars :{id:number,carType:String,color:String,year:number}[]=[
 
 const resolvers = {
     Query : {
-        getCars: () => cars
+        getCars: () => cars,
+        getOne : (_:any, args:any) => {
+            return cars.find(c=>c.id===Number(args.id)) || null
+        }
     },
     Mutation : {
         addCar: (_:any, args:any)=>{
@@ -21,6 +24,21 @@ const resolvers = {
             }
             cars.push(newcar)
             return newcar
+        },
+
+        editCar:(_:any , args:any)=>{
+            const car = cars.find(c=>c.id===Number(args.id))
+            if(!car) return null
+            car.carType = args.carType
+            car.color = args.color
+            return car
+        },
+        deleteCar:(_:any,args:any)=>{
+            const index = cars.findIndex(c=>c.id===Number(args.id));
+            if(index===-1) return null
+            const carToDelete = cars[index];
+            cars.splice(index,1)
+            return carToDelete;
         }
     }
 }

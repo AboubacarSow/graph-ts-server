@@ -10,10 +10,13 @@ const schema = gql`
 
   type Query {
     getCars: [Car!]!
+    getOne(id:ID!) : Car!
   }
 
   type Mutation {
     addCar(carType: String!, color: String!, year: Int!): Car!
+    editCar(id:ID!, carType: String!, color: String!) : Car
+    deleteCar(id: ID!): Car
   }
 `;
 
